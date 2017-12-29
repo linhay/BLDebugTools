@@ -52,12 +52,31 @@ struct SandFile {
 open class SandboxController: UITableViewController {
 
   var path = NSHomeDirectory()
-
   let cellId = "SandboxCell"
-
   var filePath = [SandFile]()
 
+  static var windowFrame = CGRect.zero
 
+
+  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+
+  public override init(style: UITableViewStyle) {
+    super.init(style: style)
+    if SandboxController.windowFrame == .zero {
+      SandboxController.windowFrame = DebugWindow.shared.frame
+    }
+
+    DebugWindow.shared.frame = CGRect(x: UIScreen.main.bounds.width * 0.1,
+                                      y: UIScreen.main.bounds.height * 0.1,
+                                      width: UIScreen.main.bounds.width * 0.8,
+                                      height: UIScreen.main.bounds.height * 0.8)
+  }
+
+  required public init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   override open func viewDidLoad() {
     super.viewDidLoad()
@@ -107,6 +126,8 @@ extension SandboxController {
 }
 
 
+
+
 extension SandboxController {
 
   open override func numberOfSections(in tableView: UITableView) -> Int {
@@ -125,6 +146,28 @@ extension SandboxController {
     return cell
   }
 
+  open override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    return true
+  }
+
+  open override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    return UITableViewCellEditingStyle.delete
+  }
+
+  open override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      if indexPath.item < filePath.count {
+        do{
+          try FileManager.default.removeItem(atPath: filePath[indexPath.item].path)
+          filePath.remove(at: indexPath.item)
+          tableView.deleteRows(at: [indexPath], with: .left)
+        }catch {
+          print(error.localizedDescription)
+        }
+      }
+    }
+  }
+
   open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let item = filePath[indexPath.item]
 
@@ -134,6 +177,7 @@ extension SandboxController {
         navigationController?.popViewController(animated: true)
       }else{
         navigationController?.dismiss(animated: true, completion: nil)
+        DebugWindow.shared.frame = SandboxController.windowFrame
       }
     case .folder:
       let vc = SandboxController()
@@ -151,7 +195,7 @@ extension SandboxController {
                         UIActivityType.postToTwitter,
                         UIActivityType.postToWeibo]
 
-      UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
+      present(vc, animated: true, completion: nil)
       break
     case .unknown:
       break
