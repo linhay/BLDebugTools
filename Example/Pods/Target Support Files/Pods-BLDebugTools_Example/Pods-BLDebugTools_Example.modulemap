@@ -1,0 +1,6 @@
+framework module Pods_BLDebugTools_Example {
+  umbrella header "Pods-BLDebugTools_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

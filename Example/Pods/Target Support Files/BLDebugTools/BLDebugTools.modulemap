@@ -1,0 +1,6 @@
+framework module BLDebugTools {
+  umbrella header "BLDebugTools-umbrella.h"
+
+  export *
+  module * { export * }
+}

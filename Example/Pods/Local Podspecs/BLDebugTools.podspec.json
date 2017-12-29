@@ -1,0 +1,35 @@
+{
+  "name": "BLDebugTools",
+  "version": "0.1.0",
+  "summary": "DebugTools for app",
+  "homepage": "https://github.com/bigL055/BLDebugTools",
+  "license": {
+    "type": "Apache License 2.0",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "linger": "linhan.bigl055@outlook.com"
+  },
+  "source": {
+    "git": "https://github.com/bigL055/BLDebugTools",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": [
+    "Sources/*/**",
+    "Sources/**"
+  ],
+  "public_header_files": "Sources/BLDebugTools.h",
+  "subspecs": [
+    {
+      "name": "FPS",
+      "source_files": "Sources/FPS/**"
+    },
+    {
+      "name": "Sandbox",
+      "source_files": "Sources/Sandbox/**"
+    }
+  ]
+}
