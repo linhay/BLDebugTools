@@ -195,6 +195,8 @@ extension SandboxController {
                         UIActivityType.postToTwitter,
                         UIActivityType.postToWeibo]
 
+      vc.excludedActivityTypes = activities
+
       present(vc, animated: true, completion: nil)
       break
     case .unknown:
