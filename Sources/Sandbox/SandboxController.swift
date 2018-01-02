@@ -114,12 +114,10 @@ extension SandboxController {
     }
     if #available(iOS 11.0, *) {
       tableView.contentInsetAdjustmentBehavior = .never
-    } else {
-
-    }
+    } 
     tableView.rowHeight = 40
     tableView.separatorStyle = .none
-    tableView.register(SandboxCell.self, forCellReuseIdentifier: cellId)
+    tableView.register(DebugBaseCell.self, forCellReuseIdentifier: cellId)
   }
 
 
@@ -140,9 +138,9 @@ extension SandboxController {
 
   open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let item = filePath[indexPath.item]
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! SandboxCell
-    cell.name.text = item.name
-    cell.icon.text = item.style.rawValue
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! DebugBaseCell
+    cell.name = item.name
+    cell.icon = item.style.rawValue
     return cell
   }
 

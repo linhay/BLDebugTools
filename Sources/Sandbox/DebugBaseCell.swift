@@ -7,13 +7,22 @@
 
 import UIKit
 
-class SandboxCell: UITableViewCell {
+class DebugBaseCell: UITableViewCell {
 
-  let icon = UILabel()
-  let name = UILabel()
+  var name: String = "" {
+    didSet{
+      nameLabel.text = name
+    }
+  }
 
-  let url = ""
+  var icon: String = "" {
+    didSet{
+      iconLabel.text = icon
+    }
+  }
 
+  private let iconLabel = UILabel()
+  private let nameLabel = UILabel()
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,19 +36,18 @@ class SandboxCell: UITableViewCell {
 
 }
 
-extension SandboxCell {
+extension DebugBaseCell {
 
   private func buildUI() {
-    contentView.addSubview(icon)
-    contentView.addSubview(name)
+    contentView.addSubview(iconLabel)
+    contentView.addSubview(nameLabel)
     buildLayout()
-    buildSubview()
   }
 
   private func buildLayout() {
 
-    icon.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
-    name.frame = CGRect(x: 40, y: 0, width: 400, height: 40)
+    iconLabel.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+    nameLabel.frame = CGRect(x: 40, y: 0, width: 400, height: 40)
 
 //    let iconLay0 = NSLayoutConstraint(item: icon, attribute: .left, relatedBy: .equal,
 //                                      toItem: contentView,
@@ -65,9 +73,5 @@ extension SandboxCell {
 //                                      toItem: contentView,
 //                                      attribute: .bottom,multiplier: 1,constant: 0)
 //    name.addConstraints([name0,name2,name3])
-  }
-
-  private func buildSubview() {
-    name.text = "2222"
   }
 }
