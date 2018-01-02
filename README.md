@@ -5,11 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/BLDebugTools.svg?style=flat)](http://cocoapods.org/pods/BLDebugTools)
 [![Platform](https://img.shields.io/cocoapods/p/BLDebugTools.svg?style=flat)](http://cocoapods.org/pods/BLDebugTools)
 
-## Example
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
-## Requirements
 
 ## Installation
 
@@ -22,7 +18,7 @@ pod 'BLDebugTools'
 
 ## Author
 
-158179948@qq.com, bigl@3pzs.com
+linger, linhan.bigl055@outlook.com
 
 ## License
 
