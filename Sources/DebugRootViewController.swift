@@ -8,6 +8,7 @@
 import UIKit
 
 class DebugRootViewController: UIViewController {
+
   let big = BigViewController()
   let small = SmallViewController()
 
@@ -16,7 +17,6 @@ class DebugRootViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     big.delegate = self
-
     small.delegate = self
 
     addChildViewController(small)

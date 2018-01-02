@@ -12,6 +12,9 @@ protocol BigVCDelegate: NSObjectProtocol {
 
 class BigViewController: UIViewController {
 
+  let items = [(name: "...",icon:"🔙"),
+               (name: "沙盒文件管理",icon:"📂")]
+
   weak var delegate: BigVCDelegate?
 
   let tableView = UITableView(frame: .zero, style: .grouped)
@@ -38,16 +41,25 @@ extension BigViewController: UITableViewDataSource,UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 6
+    return items.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "cellId") as! DebugBaseCell
-    cell.name = "沙盒文件管理"
+    let cell = tableView.dequeueReusableCell(withIdentifier: "cellId") as! DebugBaseCell
+    cell.name = items[indexPath.item].name
+    cell.icon = items[indexPath.item].icon
     return cell
   }
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    delegate?.bigvc(tapToSmall: self)
+    switch items[indexPath.item].icon {
+    case "🔙":
+      delegate?.bigvc(tapToSmall: self)
+    case "📂":
+      let vc = UINavigationController(rootViewController: SandboxController())
+      present(vc, animated: true, completion: nil)
+    default:
+      break
+    }
   }
 
 }
