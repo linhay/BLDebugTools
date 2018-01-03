@@ -2,14 +2,25 @@
 //  SandboxCell.swift
 //  BLDebugTools
 //
-//  Created by bigl on 2017/12/29.
+//  Created by bigl on 2018/1/3.
 //
 
 import UIKit
-import SnapKit
 
+protocol SandboxCellDelegate: NSObjectProtocol {
 
-class DebugBaseCell: UITableViewCell {
+  func sandboxCell(cell: SandboxCell,
+                   indexPath: IndexPath,
+                   long event: UILongPressGestureRecognizer)
+  func sandboxCell(cell: SandboxCell,
+                   indexPath: IndexPath,
+                   tap event: UITapGestureRecognizer)
+
+}
+
+class SandboxCell: UITableViewCell {
+
+  weak var delegate: SandboxCellDelegate?
 
   var name: String = "" {
     didSet{
@@ -24,6 +35,8 @@ class DebugBaseCell: UITableViewCell {
   }
 
   var url = ""
+
+  var indexPath = IndexPath(item: 0, section: 0)
 
   private let iconLabel = UILabel()
   private let nameLabel = UILabel()
@@ -40,7 +53,21 @@ class DebugBaseCell: UITableViewCell {
 
 }
 
-extension DebugBaseCell {
+
+extension SandboxCell {
+
+  @objc func longEvent(ges: UILongPressGestureRecognizer) {
+    delegate?.sandboxCell(cell: self, indexPath: indexPath, long: ges)
+  }
+
+  @objc func tapEvent(ges: UITapGestureRecognizer) {
+    delegate?.sandboxCell(cell: self, indexPath: indexPath, tap: ges)
+  }
+
+}
+
+
+extension SandboxCell {
 
   private func buildUI() {
     contentView.addSubview(iconLabel)
@@ -62,10 +89,13 @@ extension DebugBaseCell {
 
   private func buildSubview() {
     iconLabel.textAlignment = .center
+    let long = UILongPressGestureRecognizer(target: self, action: #selector(longEvent(ges:)))
+    contentView.addGestureRecognizer(long)
+
+    let tap = UITapGestureRecognizer(target: self, action: #selector(tapEvent(ges:)))
+    contentView.addGestureRecognizer(tap)
   }
 
 }
-
-
 
 

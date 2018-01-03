@@ -23,6 +23,7 @@ class BigViewController: UIViewController {
   weak var delegate: BigVCDelegate?
 
   let tableView = UITableView(frame: .zero, style: .grouped)
+  let cellID = "cellID"
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -66,7 +67,7 @@ extension BigViewController {
     if #available(iOS 11.0, *) {
       tableView.contentInsetAdjustmentBehavior = .never
     }
-    tableView.register(DebugBaseCell.self, forCellReuseIdentifier: "cellId")
+    tableView.register(DebugBaseCell.self, forCellReuseIdentifier: cellID)
   }
 
 }
@@ -78,7 +79,7 @@ extension BigViewController: UITableViewDataSource,UITableViewDelegate {
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "cellId") as! DebugBaseCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellID) as! DebugBaseCell
     cell.name = items[indexPath.item].name
     cell.icon = items[indexPath.item].icon
     return cell

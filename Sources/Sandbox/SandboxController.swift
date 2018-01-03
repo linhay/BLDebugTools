@@ -91,7 +91,7 @@ open class SandboxController: UIViewController {
       filePath.insert(back, at: 0)
     } catch {
       filePath = [SandFile(path: "", name: "...")]
-      print(error.localizedDescription)
+      DebugAlert.show(message: error.localizedDescription)
     }
   }
 
@@ -126,13 +126,60 @@ extension SandboxController {
     }
 
     tableView.rowHeight = 40
-    tableView.register(DebugBaseCell.self, forCellReuseIdentifier: cellId)
+    tableView.register(SandboxCell.self, forCellReuseIdentifier: cellId)
   }
 
 
 }
 
+// MARK: - SandboxCellDelegate
+extension SandboxController: SandboxCellDelegate {
 
+  func sandboxCell(cell: SandboxCell, indexPath: IndexPath, tap event: UITapGestureRecognizer) {
+    let item = filePath[indexPath.item]
+    switch item.style {
+    case .back:
+      if navigationController!.viewControllers.count > 1 {
+        navigationController?.popViewController(animated: true)
+      }else{
+        navigationController?.dismiss(animated: true, completion: nil)
+        DebugWindow.shared.state.style = .normal
+      }
+    case .folder:
+      guard FileManager.default.isReadableFile(atPath: item.path) else {
+        DebugAlert.show(message: "无法读取")
+        return
+      }
+      let vc = SandboxController(path: item.path)
+      navigationController?.pushViewController(vc, animated: true)
+    case .file:
+      guard FileManager.default.isReadableFile(atPath: item.path) else {
+        DebugAlert.show(message: "无法读取")
+        return
+      }
+      let url = URL(fileURLWithPath: item.path)
+      let vc = FileInfoViewController(path: url)
+      //      let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+      present(vc, animated: true, completion: nil)
+      break
+    case .unknown:
+      break
+    }
+  }
+
+  func sandboxCell(cell: SandboxCell, indexPath: IndexPath, long event: UILongPressGestureRecognizer) {
+    let item = filePath[indexPath.item]
+    guard presentedViewController == nil else { return }
+    guard FileManager.default.isReadableFile(atPath: item.path) else {
+      DebugAlert.show(message: "无法读取")
+      return
+    }
+    let url = URL(fileURLWithPath: item.path)
+    let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+    present(vc, animated: true, completion: nil)
+  }
+
+}
 
 
 extension SandboxController: UITableViewDelegate,UITableViewDataSource {
@@ -147,9 +194,11 @@ extension SandboxController: UITableViewDelegate,UITableViewDataSource {
 
   open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let item = filePath[indexPath.item]
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! DebugBaseCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! SandboxCell
     cell.name = item.name
     cell.icon = item.style.rawValue
+    cell.indexPath = indexPath
+    cell.delegate = self
     return cell
   }
 
@@ -169,42 +218,10 @@ extension SandboxController: UITableViewDelegate,UITableViewDataSource {
           filePath.remove(at: indexPath.item)
           tableView.deleteRows(at: [indexPath], with: .left)
         }catch {
-          print(error.localizedDescription)
+          DebugAlert.show(message: error.localizedDescription)
         }
       }
     }
-  }
-
-  open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let item = filePath[indexPath.item]
-
-    switch item.style {
-    case .back:
-      if navigationController!.viewControllers.count > 1 {
-        navigationController?.popViewController(animated: true)
-      }else{
-        navigationController?.dismiss(animated: true, completion: nil)
-        DebugWindow.shared.state.style = .normal
-      }
-    case .folder:
-      guard FileManager.default.isReadableFile(atPath: item.path) else {
-        return
-      }
-      let vc = SandboxController(path: item.path)
-      navigationController?.pushViewController(vc, animated: true)
-    case .file:
-      guard FileManager.default.isReadableFile(atPath: item.path) else {
-        return
-      }
-      let url = URL(fileURLWithPath: item.path)
-      let vc = FileInfoViewController(path: url)
-//      let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-      present(vc, animated: true, completion: nil)
-      break
-    case .unknown:
-      break
-    }
-
   }
 
 }
