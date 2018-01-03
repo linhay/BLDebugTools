@@ -43,6 +43,7 @@ extension DebugBaseCell {
     contentView.addSubview(iconLabel)
     contentView.addSubview(nameLabel)
     buildLayout()
+    buildSubview()
   }
 
   private func buildLayout() {
@@ -55,4 +56,9 @@ extension DebugBaseCell {
       make.left.equalTo(self.iconLabel.snp.right)
     }
   }
+
+  private func buildSubview() {
+    iconLabel.textAlignment = .center
+  }
+
 }

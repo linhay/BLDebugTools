@@ -83,9 +83,9 @@ extension BigViewController: UITableViewDataSource,UITableViewDelegate {
     cell.icon = items[indexPath.item].icon
     return cell
   }
+  
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     items[indexPath.item].block?()
-
   }
 
 }

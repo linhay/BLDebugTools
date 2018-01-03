@@ -32,7 +32,6 @@ struct SandFile {
   var path = ""
 
   init(path: String,name: String) {
-
     let coms = name.components(separatedBy: ".")
     if name == "..." {
       style = .back
@@ -59,8 +58,8 @@ open class SandboxController: UIViewController {
 
   let tableView = UITableView(frame: .zero, style: .grouped)
 
-  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  init() {
+    super.init(nibName: nil, bundle: nil)
     if SandboxController.windowFrame == .zero {
       SandboxController.windowFrame = DebugWindow.shared.frame
     }
@@ -71,33 +70,25 @@ open class SandboxController: UIViewController {
                                       height: UIScreen.main.bounds.height * 0.8)
   }
 
+
+  init(path: String) {
+    super.init(nibName: nil, bundle: nil)
+    self.path = path
+    buildItems()
+  }
+
+
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   override open func viewDidLoad() {
     super.viewDidLoad()
-    navigationController?.setNavigationBarHidden(true, animated: false)
+    buildItems()
     buildUI()
   }
 
-}
-
-
-extension SandboxController {
-
-
-  private func buildUI() {
-    automaticallyAdjustsScrollViewInsets = false
-    buildLayout()
-    buildSubview()
-  }
-
-  private func buildLayout() {
-
-  }
-
-  private func buildSubview() {
+  func buildItems() {
     do {
       filePath = try FileManager.default.contentsOfDirectory(atPath: path).map({ (item) -> SandFile in
         return SandFile(path: path, name: item)
@@ -109,12 +100,32 @@ extension SandboxController {
       filePath = [SandFile(path: "", name: "...")]
       print(error.localizedDescription)
     }
+  }
+
+}
+
+
+extension SandboxController {
+
+
+  private func buildUI() {
+    navigationController?.setNavigationBarHidden(true, animated: false)
+    view.addSubview(tableView)
+    buildLayout()
+    buildSubview()
+  }
+
+  private func buildLayout() {
+    tableView.snp.makeConstraints { (make) in
+      make.top.left.right.bottom.equalToSuperview()
+    }
+  }
+
+  private func buildSubview() {
     if #available(iOS 11.0, *) {
       tableView.contentInsetAdjustmentBehavior = .never
     }
 
-    view.addSubview(tableView)
-    tableView.frame = view.bounds
     tableView.delegate = self
     tableView.dataSource = self
     if #available(iOS 11.0, *) {
@@ -183,10 +194,8 @@ extension SandboxController: UITableViewDelegate,UITableViewDataSource {
         DebugWindow.shared.frame = SandboxController.windowFrame
       }
     case .folder:
-      let vc = SandboxController()
-      vc.path = item.path
+      let vc = SandboxController(path: item.path)
       navigationController?.pushViewController(vc, animated: true)
-
     case .file:
 
       let url = URL(fileURLWithPath: item.path)

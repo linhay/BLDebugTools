@@ -23,7 +23,7 @@ class DebugRootViewController: UIViewController {
     addChildViewController(big)
     view.addSubview(small.view)
   }
- 
+
 }
 
 extension DebugRootViewController: BigVCDelegate,SmallVCDelegate {
@@ -40,8 +40,19 @@ extension DebugRootViewController: BigVCDelegate,SmallVCDelegate {
 
   func smallvc(panForMove event: SmallViewController, ges: UIPanGestureRecognizer) {
     let centerPoint = ges.location(in: UIApplication.shared.keyWindow)
-  smallPoint = CGPoint(x: centerPoint.x - DebugWindow.shared.frame.width * 0.5,
-                    y: centerPoint.y - DebugWindow.shared.frame.height * 0.5)
+    var x = max(0, centerPoint.x - DebugWindow.shared.frame.width * 0.5)
+
+    if centerPoint.x + DebugWindow.shared.frame.width > UIScreen.main.bounds.width {
+      x = UIScreen.main.bounds.width - DebugWindow.shared.frame.width
+    }
+
+    var y = max(0, centerPoint.y - DebugWindow.shared.frame.height * 0.5)
+
+    if centerPoint.y + DebugWindow.shared.frame.height > UIScreen.main.bounds.height {
+      y = UIScreen.main.bounds.height - DebugWindow.shared.frame.height
+    }
+
+    smallPoint = CGPoint(x: x, y: y)
     DebugWindow.shared.frame.origin = smallPoint
   }
 
