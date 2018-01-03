@@ -31,10 +31,7 @@ extension DebugRootViewController: BigVCDelegate,SmallVCDelegate {
     view.subviews.forEach { (item) in
       item.removeFromSuperview()
     }
-    DebugWindow.shared.frame = CGRect(x: UIScreen.main.bounds.width * 0.1,
-                                      y: 88,
-                                      width: UIScreen.main.bounds.width * 0.8,
-                                      height: UIScreen.main.bounds.width * 0.8)
+    DebugWindow.shared.state.style = .normal
     view.addSubview(big.view)
   }
 
@@ -53,18 +50,14 @@ extension DebugRootViewController: BigVCDelegate,SmallVCDelegate {
     }
 
     smallPoint = CGPoint(x: x, y: y)
-    DebugWindow.shared.frame.origin = smallPoint
+    DebugWindow.shared.state.point = smallPoint
   }
 
   func bigvc(tapToSmall event: BigViewController) {
     view.subviews.forEach { (item) in
       item.removeFromSuperview()
     }
-
-    DebugWindow.shared.frame = CGRect(x: smallPoint.x,
-                                      y: smallPoint.y,
-                                      width: 100,
-                                      height: 100)
+    DebugWindow.shared.state.style = .small
     view.addSubview(small.view)
   }
 

@@ -60,14 +60,7 @@ open class SandboxController: UIViewController {
 
   init() {
     super.init(nibName: nil, bundle: nil)
-    if SandboxController.windowFrame == .zero {
-      SandboxController.windowFrame = DebugWindow.shared.frame
-    }
-
-    DebugWindow.shared.frame = CGRect(x: UIScreen.main.bounds.width * 0.1,
-                                      y: UIScreen.main.bounds.height * 0.1,
-                                      width: UIScreen.main.bounds.width * 0.8,
-                                      height: UIScreen.main.bounds.height * 0.8)
+    DebugWindow.shared.state.style = .big
   }
 
 
@@ -191,24 +184,21 @@ extension SandboxController: UITableViewDelegate,UITableViewDataSource {
         navigationController?.popViewController(animated: true)
       }else{
         navigationController?.dismiss(animated: true, completion: nil)
-        DebugWindow.shared.frame = SandboxController.windowFrame
+        DebugWindow.shared.state.style = .normal
       }
     case .folder:
+      guard FileManager.default.isReadableFile(atPath: item.path) else {
+        return
+      }
       let vc = SandboxController(path: item.path)
       navigationController?.pushViewController(vc, animated: true)
     case .file:
-
+      guard FileManager.default.isReadableFile(atPath: item.path) else {
+        return
+      }
       let url = URL(fileURLWithPath: item.path)
-      let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
-
-      let activities = [UIActivityType.airDrop,
-                        UIActivityType.mail,
-                        UIActivityType.copyToPasteboard,
-                        UIActivityType.postToTwitter,
-                        UIActivityType.postToWeibo]
-
-      vc.excludedActivityTypes = activities
-
+      let vc = FileInfoViewController(path: url)
+//      let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
       present(vc, animated: true, completion: nil)
       break
     case .unknown:
