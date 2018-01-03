@@ -79,7 +79,7 @@ extension FPSLabel {
     clipsToBounds = true
     textAlignment = .center
     isUserInteractionEnabled = false
-    backgroundColor = UIColor.darkGray
+    adjustsFontSizeToFitWidth = true
     link = CADisplayLink(target: self, selector: #selector(fps(link:)))
     link?.add(to: RunLoop.main, forMode: RunLoopMode.commonModes)
   }

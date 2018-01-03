@@ -20,20 +20,39 @@ class SmallViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.clear
+    buildUI()
+  }
+}
+
+// MARK: - buildUI
+extension SmallViewController {
+
+  private func buildUI() {
+    view.backgroundColor = UIColor.darkGray
     view.addSubview(fpsLabel)
+    buildLayout()
+    buildSubview()
+  }
+
+  private func buildLayout() {
+    fpsLabel.snp.makeConstraints { (make) in
+      make.top.bottom.equalToSuperview()
+      make.right.equalToSuperview().offset(-5)
+      make.left.equalToSuperview().offset(5)
+    }
+  }
+
+  private func buildSubview() {
     let pan = UIPanGestureRecognizer(target: self, action: #selector(panEvent(ges:)))
     view.addGestureRecognizer(pan)
 
     let tap = UITapGestureRecognizer(target: self, action: #selector(tapEvent(ges:)))
     view.addGestureRecognizer(tap)
-
   }
+}
 
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    fpsLabel.frame = view.frame
-  }
+// MARK: - Delegate Event
+extension SmallViewController {
 
   @objc func tapEvent(ges: UITapGestureRecognizer) {
     delegate?.smallvc(tapToBig: self)
@@ -45,3 +64,5 @@ class SmallViewController: UIViewController {
   }
 
 }
+
+
