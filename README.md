@@ -7,14 +7,34 @@
 
 
 
-## Installation
+## 示例:
 
-BLDebugTools is available through [CocoaPods](http://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+![demo](./ReadmeData/debugTools.gif)
 
-```ruby
-pod 'BLDebugTools'
-```
+
+
+
+## 简介
+
+- 导入
+
+  - swift
+
+    ```
+    import BLDebugTools
+    ```
+
+  - objc
+
+    ```
+    #import<BLDebugTools/BLDebugTools.h>
+    ```
+
+- 使用
+
+  ```swift
+  DebugWindow.shared.begin()
+  ```
 
 ## Author
 
