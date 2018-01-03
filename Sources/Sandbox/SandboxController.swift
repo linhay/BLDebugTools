@@ -49,7 +49,7 @@ struct SandFile {
 }
 
 
-open class SandboxController: UITableViewController {
+open class SandboxController: UIViewController {
 
   var path = NSHomeDirectory()
   let cellId = "SandboxCell"
@@ -57,13 +57,10 @@ open class SandboxController: UITableViewController {
 
   static var windowFrame = CGRect.zero
 
+  let tableView = UITableView(frame: .zero, style: .grouped)
 
   public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-  }
-
-  public override init(style: UITableViewStyle) {
-    super.init(style: style)
     if SandboxController.windowFrame == .zero {
       SandboxController.windowFrame = DebugWindow.shared.frame
     }
@@ -114,9 +111,17 @@ extension SandboxController {
     }
     if #available(iOS 11.0, *) {
       tableView.contentInsetAdjustmentBehavior = .never
-    } 
+    }
+
+    view.addSubview(tableView)
+    tableView.frame = view.bounds
+    tableView.delegate = self
+    tableView.dataSource = self
+    if #available(iOS 11.0, *) {
+      tableView.contentInsetAdjustmentBehavior = .never
+    }
+
     tableView.rowHeight = 40
-    tableView.separatorStyle = .none
     tableView.register(DebugBaseCell.self, forCellReuseIdentifier: cellId)
   }
 
@@ -126,17 +131,17 @@ extension SandboxController {
 
 
 
-extension SandboxController {
+extension SandboxController: UITableViewDelegate,UITableViewDataSource {
 
-  open override func numberOfSections(in tableView: UITableView) -> Int {
+  open func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
 
-  open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return filePath.count
   }
 
-  open override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let item = filePath[indexPath.item]
     let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! DebugBaseCell
     cell.name = item.name
@@ -144,15 +149,15 @@ extension SandboxController {
     return cell
   }
 
-  open override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+  open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
     return true
   }
 
-  open override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+  open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
     return UITableViewCellEditingStyle.delete
   }
 
-  open override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+  open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       if indexPath.item < filePath.count {
         do{
@@ -166,7 +171,7 @@ extension SandboxController {
     }
   }
 
-  open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let item = filePath[indexPath.item]
 
     switch item.style {

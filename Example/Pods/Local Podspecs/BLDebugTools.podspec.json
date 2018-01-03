@@ -22,6 +22,11 @@
     "Sources/**"
   ],
   "public_header_files": "Sources/BLDebugTools.h",
+  "dependencies": {
+    "SnapKit": [
+
+    ]
+  },
   "subspecs": [
     {
       "name": "FPS",

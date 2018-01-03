@@ -12,8 +12,13 @@ protocol BigVCDelegate: NSObjectProtocol {
 
 class BigViewController: UIViewController {
 
-  let items = [(name: "...",icon:"🔙"),
-               (name: "沙盒文件管理",icon:"📂")]
+  struct CellItem {
+    var name = ""
+    var icon = ""
+    var block: (()->())? = nil
+  }
+
+  var items = [CellItem]()
 
   weak var delegate: BigVCDelegate?
 
@@ -21,11 +26,43 @@ class BigViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    buildItems()
+    buildUI()
+  }
+
+
+  func buildItems() {
+    items.append(CellItem(name: "...", icon: "🔙", block: {
+      self.delegate?.bigvc(tapToSmall: self)
+    }))
+
+    items.append(CellItem(name: "沙盒文件管理", icon: "📂", block: {
+      let vc = UINavigationController(rootViewController: SandboxController())
+      self.present(vc, animated: true, completion: nil)
+    }))
+  }
+
+}
+
+extension BigViewController {
+
+  private func buildUI() {
     navigationController?.setNavigationBarHidden(true, animated: false)
     view.addSubview(tableView)
-    tableView.frame = view.bounds
+    buildLayout()
+    buildSubview()
+  }
+
+  private func buildLayout() {
+    tableView.snp.makeConstraints { (make) in
+      make.top.bottom.left.right.equalToSuperview()
+    }
+  }
+
+  private func buildSubview() {
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.rowHeight = 40
     if #available(iOS 11.0, *) {
       tableView.contentInsetAdjustmentBehavior = .never
     }
@@ -35,10 +72,6 @@ class BigViewController: UIViewController {
 }
 
 extension BigViewController: UITableViewDataSource,UITableViewDelegate {
-
-  func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return items.count
@@ -51,15 +84,8 @@ extension BigViewController: UITableViewDataSource,UITableViewDelegate {
     return cell
   }
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    switch items[indexPath.item].icon {
-    case "🔙":
-      delegate?.bigvc(tapToSmall: self)
-    case "📂":
-      let vc = UINavigationController(rootViewController: SandboxController())
-      present(vc, animated: true, completion: nil)
-    default:
-      break
-    }
+    items[indexPath.item].block?()
+
   }
 
 }

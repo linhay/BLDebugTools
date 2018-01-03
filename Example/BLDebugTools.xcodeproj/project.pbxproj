@@ -212,10 +212,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BLDebugTools_Example/Pods-BLDebugTools_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BLDebugTools/BLDebugTools.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BLDebugTools.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

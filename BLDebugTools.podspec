@@ -12,6 +12,7 @@ s.ios.deployment_target = '8.0'
 
 s.source_files = ['Sources/*/**','Sources/**']
 s.public_header_files = 'Sources/BLDebugTools.h'
+s.dependency 'SnapKit'
 
 s.subspec 'FPS' do |ss|
 ss.source_files = 'Sources/FPS/**'

@@ -2,8 +2,12 @@ PODS:
   - BLDebugTools (0.1.0):
     - BLDebugTools/FPS (= 0.1.0)
     - BLDebugTools/Sandbox (= 0.1.0)
-  - BLDebugTools/FPS (0.1.0)
-  - BLDebugTools/Sandbox (0.1.0)
+    - SnapKit
+  - BLDebugTools/FPS (0.1.0):
+    - SnapKit
+  - BLDebugTools/Sandbox (0.1.0):
+    - SnapKit
+  - SnapKit (4.0.0)
 
 DEPENDENCIES:
   - BLDebugTools (from `../`)
@@ -13,7 +17,8 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  BLDebugTools: 960b96b0fc179dc60940c5ec5575282badc615e3
+  BLDebugTools: 2fb2a42441ebe154fc4e0b25404e16394fb98590
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
 PODFILE CHECKSUM: 302883cb4657db6aa0a66ef87197e33571efd8c9
 
