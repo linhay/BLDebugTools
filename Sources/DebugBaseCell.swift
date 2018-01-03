@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 
-
 class DebugBaseCell: UITableViewCell {
 
   var name: String = "" {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 struct SandFile {
   enum Style: String {
@@ -159,7 +160,6 @@ extension SandboxController: SandboxCellDelegate {
       }
       let url = URL(fileURLWithPath: item.path)
       let vc = FileInfoViewController(path: url)
-      //      let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
       present(vc, animated: true, completion: nil)
       break
     case .unknown:

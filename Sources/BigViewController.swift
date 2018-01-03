@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+
 protocol BigVCDelegate: NSObjectProtocol {
   func bigvc(tapToSmall event: BigViewController)
 }
