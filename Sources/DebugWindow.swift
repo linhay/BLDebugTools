@@ -55,8 +55,10 @@ open class DebugWindow: UIWindow {
   public func begin() {
     rootViewController = DebugRootViewController()
     DebugWindow.shared.windowLevel = 10
+    DebugWindow.shared.layer.borderWidth = 1
+    DebugWindow.shared.layer.borderColor = UIColor.black.cgColor.copy(alpha: 0.8)
     DebugWindow.shared.layer.cornerRadius = 10
-    DebugWindow.shared.clipsToBounds = true
+    DebugWindow.shared.layer.masksToBounds = true
     DebugWindow.shared.makeKeyAndVisible()
   }
 

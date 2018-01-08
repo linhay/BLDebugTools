@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = 'BLDebugTools'
-s.version          = '0.1.1'
+s.version          = '0.1.2'
 s.summary          = 'DebugTools for app'
 
 s.homepage = 'https://github.com/bigL055/BLDebugTools'

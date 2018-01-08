@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     height: UIScreen.main.bounds.height))
 
     let vc = ViewController()
-    vc.view.backgroundColor = UIColor.brown
+    vc.view.backgroundColor = UIColor.white
     window?.rootViewController = vc
     window?.makeKeyAndVisible()
     return true
