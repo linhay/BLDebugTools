@@ -1,6 +1,6 @@
 # BLDebugTools
 
-[![CI Status](http://img.shields.io/travis/158179948@qq.com/BLDebugTools.svg?style=flat)](https://travis-ci.org/158179948@qq.com/BLDebugTools)
+[![CI Status](http://img.shields.io/travis/linhan.linhey@outlook.com/BLDebugTools.svg?style=flat)](https://travis-ci.org/linhan.linhey@outlook.com/BLDebugTools)
 [![Version](https://img.shields.io/cocoapods/v/BLDebugTools.svg?style=flat)](http://cocoapods.org/pods/BLDebugTools)
 [![License](https://img.shields.io/cocoapods/l/BLDebugTools.svg?style=flat)](http://cocoapods.org/pods/BLDebugTools)
 [![Platform](https://img.shields.io/cocoapods/p/BLDebugTools.svg?style=flat)](http://cocoapods.org/pods/BLDebugTools)
@@ -46,7 +46,7 @@ BLDebugTools是一个用于debug阶段调试的工具集合,目前提供了:
 
 ## Author
 
-linger, linhan.bigl055@outlook.com
+linhey, linhan.linhey@outlook.com
 
 ## License
 

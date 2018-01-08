@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  BLDebugTools
 //
-//  Created by 158179948@qq.com on 12/29/2017.
-//  Copyright (c) 2017 158179948@qq.com. All rights reserved.
+//  Created by linhan.linhey@outlook.com on 12/29/2017.
+//  Copyright (c) 2017 linhan.linhey@outlook.com. All rights reserved.
 //
 
 import UIKit
