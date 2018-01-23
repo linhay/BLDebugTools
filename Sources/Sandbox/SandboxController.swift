@@ -14,80 +14,70 @@ struct SandFile {
     case file = "📃"
     case back = "🔙"
     case unknown = "🐔"
-
-    init(name: String){
-      if name == "..." {
-        self = .back
-      }else if name.isEmpty {
-        self = .folder
-      }
-      else {
-        self = .file
-      }
-    }
   }
-
+  
   var style = Style.unknown
   var type = ""
   var name = ""
   var path = ""
-
+  
   init(path: String,name: String) {
-    let coms = name.components(separatedBy: ".")
-    if name == "..." {
-      style = .back
-    }else if coms.count > 1 {
-      type = coms.last!
-      style = Style(name: type)
-    }else {
-      style = Style(name: "")
-    }
-
     self.path = path + "/" + name
     self.name = name
+    
+    if name == "..." {
+      style = .back
+      return
+    }
+    
+    var isDirectory = ObjCBool(false)
+    let exists = FileManager.default.fileExists(atPath: self.path, isDirectory: &isDirectory)
+    if  exists {
+      style = isDirectory.boolValue ? .folder : .file
+    }
   }
 }
 
 
 open class SandboxController: UIViewController {
-
+  
   var path = NSHomeDirectory()
   let cellId = "SandboxCell"
   var filePath = [SandFile]()
-
+  
   static var windowFrame = CGRect.zero
-
+  
   let tableView = UITableView(frame: .zero, style: .grouped)
-
+  
   init() {
     super.init(nibName: nil, bundle: nil)
     DebugWindow.shared.state.style = .big
   }
-
-
+  
+  
   init(path: String) {
     super.init(nibName: nil, bundle: nil)
     self.path = path
     buildItems()
   }
-
-
+  
+  
   required public init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
+  
   override open func viewDidLoad() {
     super.viewDidLoad()
     buildItems()
     buildUI()
   }
-
+  
   func buildItems() {
     do {
       filePath = try FileManager.default.contentsOfDirectory(atPath: path).map({ (item) -> SandFile in
         return SandFile(path: path, name: item)
       })
-
+      
       let back = SandFile(path: "", name: "...")
       filePath.insert(back, at: 0)
     } catch {
@@ -95,47 +85,39 @@ open class SandboxController: UIViewController {
       DebugAlert.show(message: error.localizedDescription)
     }
   }
-
+  
 }
 
 
 extension SandboxController {
-
-
+  
+  
   private func buildUI() {
     navigationController?.setNavigationBarHidden(true, animated: false)
     view.addSubview(tableView)
     buildLayout()
     buildSubview()
   }
-
+  
   private func buildLayout() {
     tableView.snp.makeConstraints { (make) in
       make.top.left.right.bottom.equalToSuperview()
     }
   }
-
+  
   private func buildSubview() {
-    if #available(iOS 11.0, *) {
-      tableView.contentInsetAdjustmentBehavior = .never
-    }
-
     tableView.delegate = self
     tableView.dataSource = self
-    if #available(iOS 11.0, *) {
-      tableView.contentInsetAdjustmentBehavior = .never
-    }
-
     tableView.rowHeight = 40
     tableView.register(SandboxCell.self, forCellReuseIdentifier: cellId)
   }
-
-
+  
+  
 }
 
 // MARK: - SandboxCellDelegate
 extension SandboxController: SandboxCellDelegate {
-
+  
   func sandboxCell(cell: SandboxCell, indexPath: IndexPath, tap event: UITapGestureRecognizer) {
     let item = filePath[indexPath.item]
     switch item.style {
@@ -166,7 +148,7 @@ extension SandboxController: SandboxCellDelegate {
       break
     }
   }
-
+  
   func sandboxCell(cell: SandboxCell, indexPath: IndexPath, long event: UILongPressGestureRecognizer) {
     let item = filePath[indexPath.item]
     guard presentedViewController == nil else { return }
@@ -178,20 +160,20 @@ extension SandboxController: SandboxCellDelegate {
     let vc = UIActivityViewController(activityItems: [url], applicationActivities: nil)
     present(vc, animated: true, completion: nil)
   }
-
+  
 }
 
 
 extension SandboxController: UITableViewDelegate,UITableViewDataSource {
-
+  
   open func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
-
+  
   open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return filePath.count
   }
-
+  
   open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let item = filePath[indexPath.item]
     let cell = tableView.dequeueReusableCell(withIdentifier: cellId) as! SandboxCell
@@ -201,15 +183,15 @@ extension SandboxController: UITableViewDelegate,UITableViewDataSource {
     cell.delegate = self
     return cell
   }
-
+  
   open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
     return true
   }
-
+  
   open func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
     return UITableViewCellEditingStyle.delete
   }
-
+  
   open func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       if indexPath.item < filePath.count {
@@ -223,5 +205,5 @@ extension SandboxController: UITableViewDelegate,UITableViewDataSource {
       }
     }
   }
-
+  
 }

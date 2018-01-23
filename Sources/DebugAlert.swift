@@ -9,7 +9,7 @@ import UIKit
 
 struct DebugAlert {
 
-  static func show(message: String,time: TimeInterval = 2.0){
+  static func show(message: String,time: TimeInterval = 1.5){
     let alert = UIAlertController(title: message,
                                   message: nil,
                                   preferredStyle: UIAlertControllerStyle.alert)
