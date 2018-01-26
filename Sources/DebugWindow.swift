@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PopGesture
 
 open class DebugWindow: UIWindow {
 
@@ -53,6 +54,7 @@ open class DebugWindow: UIWindow {
 
 
   public func begin() {
+    PopGesture.begin()
     rootViewController = DebugRootViewController()
     DebugWindow.shared.windowLevel = 10
     DebugWindow.shared.layer.borderWidth = 1

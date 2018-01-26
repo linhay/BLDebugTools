@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = 'BLDebugTools'
-s.version          = '0.1.2'
+s.version          = '0.1.4'
 s.summary          = 'DebugTools for app'
 
 s.homepage = 'https://github.com/bigL055/BLDebugTools'
@@ -13,5 +13,6 @@ s.ios.deployment_target = '8.0'
 s.source_files = ['Sources/*/**','Sources/**']
 s.public_header_files = 'Sources/BLDebugTools.h'
 s.dependency 'SnapKit'
+s.dependency 'PopGesture'
 
 end

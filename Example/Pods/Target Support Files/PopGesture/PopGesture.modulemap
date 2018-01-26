@@ -1,0 +1,6 @@
+framework module PopGesture {
+  umbrella header "PopGesture-umbrella.h"
+
+  export *
+  module * { export * }
+}

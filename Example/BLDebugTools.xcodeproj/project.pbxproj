@@ -13,6 +13,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		6B090EAD511C47F33F47ED8D /* Pods_BLDebugTools_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE12D22B5732E8FDBA2D66A8 /* Pods_BLDebugTools_Example.framework */; };
+		CDC77627201AFAE200D1E90B /* trunk.sh in Resources */ = {isa = PBXBuildFile; fileRef = CDC77626201AFAE200D1E90B /* trunk.sh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C7469836E7D0AF65CD60770B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		CDC77626201AFAE200D1E90B /* trunk.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = trunk.sh; path = ../trunk.sh; sourceTree = "<group>"; };
 		CE12D22B5732E8FDBA2D66A8 /* Pods_BLDebugTools_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BLDebugTools_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7AC2D4AD949C249748F81E8 /* Pods-BLDebugTools_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLDebugTools_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BLDebugTools_Tests/Pods-BLDebugTools_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EA83C180244591C1F47B82A3 /* Pods-BLDebugTools_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BLDebugTools_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-BLDebugTools_Example/Pods-BLDebugTools_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				EB625FE435F54AF8414B8A57 /* BLDebugTools.podspec */,
+				CDC77626201AFAE200D1E90B /* trunk.sh */,
 				C7469836E7D0AF65CD60770B /* README.md */,
 				FDD2DC7775BF8E6F8F212113 /* LICENSE */,
 			);
@@ -181,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				CDC77627201AFAE200D1E90B /* trunk.sh in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -212,11 +216,13 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-BLDebugTools_Example/Pods-BLDebugTools_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BLDebugTools/BLDebugTools.framework",
+				"${BUILT_PRODUCTS_DIR}/PopGesture/PopGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BLDebugTools.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PopGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;

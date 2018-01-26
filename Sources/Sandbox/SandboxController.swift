@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import PopGesture
 
 struct SandFile {
   enum Style: String {
@@ -68,6 +69,7 @@ open class SandboxController: UIViewController {
   
   override open func viewDidLoad() {
     super.viewDidLoad()
+    isSetNavHidden = true
     buildItems()
     buildUI()
   }
